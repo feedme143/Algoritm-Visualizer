@@ -1,20 +1,21 @@
-import Row from './Row'
+import Print from './Print'
 import React from 'react'
 
 export default function NQueens() {
 
     const N = 8
-    let blank = []
+    let board = []
     // Initialize the Board
     for (let i = 0; i < N; i++) {
-        blank[i] = [];
+        board[i] = [];
         for (let j = 0; j < N; j++) 
-            blank[i][j] = 0;
+            board[i][j] = 0;
     }
 
-    //save board as state var
-    const [board, setBoard] = React.useState(blank)
-    const [displayGrid, setDisplayGrid] = React.useState(board.map((row, index) => <Row info = {row} key = {index}/>))
+    // Initialize what we will display on the screen as a state var
+    const [displayGrid, setDisplayGrid] = React.useState(<Print stack = {[]}/>)
+
+    let running = false; //bool that holds weather the alg is running or not
 
     //check if Safe
     function isSafe(r, c) {
@@ -27,7 +28,6 @@ export default function NQueens() {
         let top = r;
         let bot = r;
         for (let j = c; j >= 0; j--) {
-            console.log(board);
             //update();
             if (top >= 0) {
                 if (board[top][j] === 1)
@@ -46,48 +46,107 @@ export default function NQueens() {
         return true;
     }
 
-    //recursive backtracking function
-    function nQueens(c) {
-        if (c >= N) 
-            return true;
+    //iterative function
+    async function nQueens() {
+        running = true;
+        let stack = [];
         
-        for (let r = 0; r < N; r++) {
-
-            if (isSafe(r, c)) {
-                setBoard(prev => {
-                    prev[r][c] = 1;
-                    return prev;
-                });
+        let r = 0;
+        let c = 0;
+        
+        while (c < N) {
+            while (r < N) {
+    
+                if (isSafe(r, c)) {
+                    //console.log(board);
+                    stack.push([r,c]);
+                    board[r][c] = 1;
+                    // setBoard(prev => {
+                    //     prev[r][c] = 1;
+                    //     return prev;
+                    // });
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    update(stack);
+                    r = 0;
+                    c++;
+                    break;
+                }
                 
+                r++;
+            } if (r===N) {
+                const temp = stack.pop();
+                r = temp ? temp[0] : 0;
+                c = temp ? temp[1] : 0;
+                board[r][c]=0;
+                // setBoard(prev => {
+                //     prev[r][c] = 0;
+                //     return prev;
+                // });
+                r++;
+            }
 
-                if (nQueens(c+1))
-                    return true;
-                
-                setBoard(prev => {
-                    prev[r][c] = 0;
-                    return prev;
-                });
-            } 
+            running = false;
         }
 
-        return false;
+        console.log(board)
     }
+    //recursive backtracking function
+    // function nQueens(c) {
+    //     if (c >= N) 
+    //         return true;
+        
+    //     for (let r = 0; r < N; r++) {
+
+    //         if (isSafe(r, c)) {
+    //             setBoard(prev => {
+    //                 prev[r][c] = 1;
+    //                 return prev;
+    //             });
+                
+
+    //             if (nQueens(c+1))
+    //                 return true;
+                
+    //             setBoard(prev => {
+    //                 prev[r][c] = 0;
+    //                 return prev;
+    //             });
+    //         } 
+    //     }
+
+    //     return false;
+    // }
 
     function solve() {
-        nQueens(0);
-        update();
+        nQueens();
     }
 
-    function update() {
-        setDisplayGrid(board.map((row, index) => <Row info = {row} key = {index}/>));
+    function update(s) {
+        setDisplayGrid(<Print stack = {s}/>);
+    }
+
+    function reset() {
+        if (running)
+            return
+        //reset the board
+        for (let i = 0; i < N; i++) {
+            board[i] = [];
+            for (let j = 0; j < N; j++) 
+                board[i][j] = 0;
+        }
+
+        update([]);
     }
         
     return (
-        <>
-            <button onClick={solve}>Solve N-Queens</button>
+        <div className = "content">
+            <div className = "buttons">
+                <button onClick={solve}>Solve N-Queens</button>
+                <button onClick={reset}>Reset</button>
+            </div>
             <div className = "grid">
                 {displayGrid}
             </div>
-        </>
+        </div>
     )
 }

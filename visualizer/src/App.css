@@ -1,6 +1,25 @@
-.grid{
-  height: 100vh;
+.App{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px;
+}
+
+.content{
+  height: 100%;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttons{
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.grid{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,5 +41,9 @@
 }
 
 .text{
-  
+
+}
+
+.Q{
+  background-color: aliceblue;
 }
