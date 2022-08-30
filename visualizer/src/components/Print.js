@@ -1,6 +1,6 @@
 export default function Print(props) {
-    const N = 8
-    let blank = []
+    const N = props.boardSize;
+    let blank = [];
     // Initialize the Board
     for (let i = 0; i < N; i++) {
         blank[i] = [];

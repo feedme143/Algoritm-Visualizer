@@ -3,8 +3,8 @@ import React from 'react'
 
 export default function NQueens() {
 
-    const N = 8
-    let board = []
+    const N = 4;
+    let board = [];
     // Initialize the Board
     for (let i = 0; i < N; i++) {
         board[i] = [];
@@ -13,7 +13,8 @@ export default function NQueens() {
     }
 
     // Initialize what we will display on the screen as a state var
-    const [displayGrid, setDisplayGrid] = React.useState(<Print stack = {[]}/>)
+    const [displayGrid, setDisplayGrid] = React.useState(<Print stack = {[]} boardSize = {N}/>)
+    const [slider, setSlider] = React.useState(1)
 
     let running = false; //bool that holds weather the alg is running or not
 
@@ -65,7 +66,8 @@ export default function NQueens() {
                     //     prev[r][c] = 1;
                     //     return prev;
                     // });
-                    await new Promise(resolve => setTimeout(resolve, 100));
+                    if (slider > 1)
+                        await new Promise(resolve => setTimeout(resolve, slider));
                     update(stack);
                     r = 0;
                     c++;
@@ -122,7 +124,7 @@ export default function NQueens() {
     }
 
     function update(s) {
-        setDisplayGrid(<Print stack = {s}/>);
+        setDisplayGrid(<Print stack = {s} boardSize = {N}/>);
     }
 
     function reset() {
@@ -137,12 +139,13 @@ export default function NQueens() {
 
         update([]);
     }
-        
+
     return (
         <div className = "content">
             <div className = "buttons">
                 <button onClick={solve}>Solve N-Queens</button>
                 <button onClick={reset}>Reset</button>
+                <input type="range" min="1" max="100" value={slider} onChange={(e) => setSlider(e.target.value)}/>
             </div>
             <div className = "grid">
                 {displayGrid}
