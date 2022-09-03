@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function NQueens() {
 
-    const N = 4;
+    const N = 8;
     let board = [];
     // Initialize the Board
     for (let i = 0; i < N; i++) {
@@ -13,10 +13,10 @@ export default function NQueens() {
     }
 
     // Initialize what we will display on the screen as a state var
-    const [displayGrid, setDisplayGrid] = React.useState(<Print stack = {[]} boardSize = {N}/>)
-    const [slider, setSlider] = React.useState(1)
+    const [displayGrid, setDisplayGrid] = React.useState(<Print stack = {[]} boardSize = {N}/>);
+    const [slider, setSlider] = React.useState(1);
 
-    let running = false; //bool that holds weather the alg is running or not
+    const [running, setRunning] = React.useState(false); //bool that holds weather the alg is running or not
 
     //check if Safe
     function isSafe(r, c) {
@@ -49,7 +49,7 @@ export default function NQueens() {
 
     //iterative function
     async function nQueens() {
-        running = true;
+        setRunning(true);
         let stack = [];
         
         let r = 0;
@@ -87,10 +87,10 @@ export default function NQueens() {
                 r++;
             }
 
-            running = false;
         }
-
-        console.log(board)
+        
+        setRunning(false);
+        console.log(board);
     }
     //recursive backtracking function
     // function nQueens(c) {
@@ -142,6 +142,7 @@ export default function NQueens() {
 
     return (
         <div className = "content">
+            <h1>N-Queens visualizer</h1>
             <div className = "buttons">
                 <button onClick={solve}>Solve N-Queens</button>
                 <button onClick={reset}>Reset</button>
