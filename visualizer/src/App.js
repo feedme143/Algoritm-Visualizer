@@ -1,6 +1,7 @@
 import NQueens from './components/NQueens';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Sudoku from './components/Sudoku';
 import './App.css';
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
         <Routes>
           <Route path='/' exact element={<div>This is the Home Page!</div>}/>
           <Route path='/nqueens' element={<NQueens/>}/>
-          <Route path='/sudoku' element={<div>Nothing Yet!</div>}/>
+          <Route path='/sudoku' element={<div><Sudoku/></div>}/>
         </Routes>
       </div>
     </Router>

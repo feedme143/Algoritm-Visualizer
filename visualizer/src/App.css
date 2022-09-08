@@ -56,3 +56,40 @@
 .Q{
   background-color: aliceblue;
 }
+
+.sudokuBoard{
+  margin: auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sudoku-row{
+  display: flex;
+  flex-direction: row;
+}
+
+.sudoku-tile{
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.c2{
+  border-right-width: 3px;
+}
+
+.c5{
+  border-right-width: 3px;
+}
+
+.r2{
+  border-bottom-width: 3px;
+}
+
+.r5{
+  border-bottom-width: 3px;
+}
